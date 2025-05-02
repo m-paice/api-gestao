@@ -50,6 +50,25 @@ route.post('/', useToken, validateBodyForCreateReport, async (req, res) => {
     }
 });
 
+route.delete('/:id', useToken, async (req, res) => {
+    try {
+        await model.removeReport(req.params.id);
+        res.status(200).json({
+            code: 'gestao.api.report.login.success',
+            message: 'report deleted successfully',
+            transaction: nanoid(),
+        } as APIResponse);
+    } catch (error) {
+        logger('Error in delete report route:', error);
+        res.status(500).json({
+            code: 'gestao.api.report.login.failed',
+            message: 'Internal server error',
+            transaction: nanoid(),
+            args: error,
+        } as APIResponse);
+    }
+});
+
 route.get(
     '/transactions',
     useToken,

@@ -3,6 +3,7 @@ import debug from 'debug';
 import express from 'express';
 import dayjs from 'dayjs';
 import { nanoid } from 'nanoid';
+import morgan from 'morgan';
 import cors from 'cors';
 import { uniqueExecution } from '@nsfilho/unique';
 import { EXPRESS_PORT, EXPRESS_START_DELAY } from '../../constants';
@@ -19,6 +20,7 @@ app.set('trust proxy', true);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
 
 app.get('/', (_req, res) => {
     res.status(200).json({

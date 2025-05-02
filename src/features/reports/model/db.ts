@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-import { getDb } from '../../../services/mongo';
+import { getDb, ObjectId } from '../../../services/mongo';
 import { COLLECTION_REPORTS, ReportDocument, ReportsSchema } from './schema';
 import type {
     CreateReportParams,
@@ -17,6 +17,9 @@ export const createReport = async (payload: CreateReportParams) => {
 
     return db().insertOne(data);
 };
+
+export const removeReport = async (id: string) =>
+    db().deleteOne({ _id: new ObjectId(id) });
 
 export const findTransactionByMonth = async (params: FindTransactionsToMonth) =>
     db()
